@@ -1,8 +1,9 @@
 const UserSchema = require("../mongoSchemas/userSchema");
 const encryptSHA = require("./encryptSHA");
 const criptoBase64 = require("./criptoBase64");
+const criptoBcrypt = require("./criptoBcrypt");
 
-const cripto = new encryptSHA();
+const cripto = new criptoBcrypt();
 
 class UserModel {
   constructor({ username, fullName, password }) {
@@ -17,7 +18,8 @@ class UserModel {
       newUserSchema.username = this.username;
       newUserSchema.fullName = this.fullName;
       newUserSchema.password = cripto.encrypt(this.password);
-      crypto.decrypt(this.password);
+      console.log("newUserSchema.password", newUserSchema.password);
+
       await newUserSchema.save();
     } catch (error) {
       console.error(error);

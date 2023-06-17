@@ -3,6 +3,7 @@ const encryptI = require("./encryptInterface");
 
 class EncryptSHA extends encryptI {
   constructor() {
+    super();
     this.secret = "F7PEZ21wm8pBtqQmvGaqrmoeu53X4jNv3V9ohYAVqZ0vcdW";
   }
 
