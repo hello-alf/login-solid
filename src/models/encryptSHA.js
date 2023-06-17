@@ -11,6 +11,13 @@ class EncryptSHA extends encryptI {
     const hash = createHmac("sha256", this.secret).update(value).digest("hex");
     return hash;
   }
+
+  compare(plainText, textHashed) {
+    if (textHashed === this.encrypt(plainText)) {
+      return true;
+    }
+    return false;
+  }
 }
 
 module.exports = EncryptSHA;

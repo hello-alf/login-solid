@@ -8,10 +8,9 @@ exports.register = async (req, res) => {
     const userResponse = {
       message: "Usuario creado",
     };
-    console.log("********************");
-    console.log(req.body);
-    const user = new userModel({ ...req.body });
-    await user.register();
+
+    const user = new userModel();
+    await user.register({ ...req.body });
     console.log("user Controller", user);
 
     res.status(201).json(userResponse);

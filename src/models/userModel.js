@@ -6,21 +6,33 @@ const criptoBcrypt = require("./criptoBcrypt");
 const cripto = new criptoBcrypt();
 
 class UserModel {
-  constructor({ username, fullName, password }) {
-    this.username = username;
-    this.fullName = fullName;
-    this.password = password;
-  }
+  constructor() {}
 
-  async register() {
+  async register({ username, fullName, password }) {
     try {
       const newUserSchema = new UserSchema();
-      newUserSchema.username = this.username;
-      newUserSchema.fullName = this.fullName;
-      newUserSchema.password = cripto.encrypt(this.password);
-      console.log("newUserSchema.password", newUserSchema.password);
+      newUserSchema.username = username;
+      newUserSchema.fullName = fullName;
+      newUserSchema.password = cripto.encrypt(password);
 
       await newUserSchema.save();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async auth({ username, password }) {
+    try {
+      let user = await UserSchema.findOne({ username }).exec();
+
+      if (user === null) {
+        console.log("por falso");
+        return false;
+      }
+
+      const checkPassword = await cripto.compare(password, user.password);
+      console.log("checkPassword", checkPassword);
+      return;
     } catch (error) {
       console.error(error);
     }

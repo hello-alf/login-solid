@@ -12,6 +12,11 @@ class EncryptSHA extends encryptI {
     const hash = bcrypt.hashSync(value, salt);
     return hash;
   }
+
+  async compare(plainText, textHashed) {
+    let response = await bcrypt.compare(plainText, textHashed);
+    return response;
+  }
 }
 
 module.exports = EncryptSHA;
