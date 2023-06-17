@@ -1,8 +1,8 @@
-const logging = require("../utils/logging");
-const security = require("../utils/security");
 const { SERVER_ERROR } = require("./../enums/messages");
+const loggerTxt = require("../models/loggerTxt");
 const userModel = require("../models/userModel");
 
+const logger = new loggerTxt();
 exports.register = async (req, res) => {
   try {
     const userResponse = {

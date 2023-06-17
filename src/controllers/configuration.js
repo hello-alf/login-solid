@@ -1,5 +1,6 @@
 const logging = require("../utils/logging");
-const security = require("../utils/security");
+const loggerTxt = require("../models/loggerTxt");
+const logger = new loggerTxt();
 
 exports.login = async (req, res) => {
   try {
@@ -18,7 +19,7 @@ exports.login = async (req, res) => {
     const user = "admin";
 
     if (user !== username) {
-      logging.writeToLog(`Intento de inicio de sesión fallido: ${username}`);
+      logger.write(`Intento de inicio de sesión fallido: ${username}`);
       return res.status(401).json(loginResponse);
     }
 
@@ -28,7 +29,7 @@ exports.login = async (req, res) => {
     );
 
     if (isPasswordValid === false) {
-      logging.writeToLog(`Intento de inicio de sesión fallido: ${username}`);
+      logger.write(`Intento de inicio de sesión fallido: ${username}`);
       return res.status(401).json(loginResponse);
     }
 
@@ -36,7 +37,7 @@ exports.login = async (req, res) => {
 
     loginResponse.authenticated = true;
     loginResponse.message = "";
-    logging.writeToLog(`Inicio de sesión correcto: ${username}`);
+    logger.write(`Inicio de sesión correcto: ${username}`);
     res.status(200).json(loginResponse);
   } catch (error) {
     console.log(error);
