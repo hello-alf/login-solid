@@ -2,8 +2,7 @@ const { SERVER_ERROR } = require("./../enums/messages");
 const loggerTxt = require("../models/loggerTxt");
 const userModel = require("../models/userModel");
 
-const logger = new loggerTxt();
-exports.register = async (req, res) => {
+exports.register = async (req, res, logger) => {
   try {
     const userResponse = {
       message: "Usuario creado",

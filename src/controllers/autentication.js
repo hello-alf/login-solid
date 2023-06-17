@@ -1,11 +1,7 @@
-const loggerTxt = require("../models/loggerTxt");
-
 const { SERVER_ERROR } = require("./../enums/messages");
 const userModel = require("../models/userModel");
 
-const logger = new loggerTxt();
-
-exports.login = async (req, res) => {
+exports.login = async (req, res, logger) => {
   try {
     const loginResponse = {
       authenticated: false,
@@ -15,14 +11,14 @@ exports.login = async (req, res) => {
     const user = new userModel();
     const response = await user.auth({ ...req.body });
     if (response === false) {
-      logger.write(`Intento de inicio de sesión fallido: ${username}`);
+      await logger.write(`Intento de inicio de sesión fallido: ${username}`);
       return res.status(401).json(loginResponse);
     }
 
     loginResponse.authenticated = true;
     loginResponse.message = "";
 
-    logger.write(`Inicio de sesión correcto: ${req.body.username}`);
+    await logger.write(`Inicio de sesión correcto: ${req.body.username}`);
     res.status(200).json(loginResponse);
   } catch (error) {
     console.log(error);
