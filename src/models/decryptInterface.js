@@ -1,5 +1,7 @@
 class DecryptInterface {
-  decrypt() {
+  decrypt(value) {
     console.log(`decrypt`);
   }
 }
+
+module.exports = DecryptInterface;
